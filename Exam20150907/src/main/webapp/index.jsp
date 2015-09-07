@@ -17,7 +17,6 @@
 	$(document).ready(
 			function() {
 				var arr;
-				
 				function ajaxForData() {
 					$.ajax({
 						method : "Post",
@@ -44,12 +43,13 @@
 			                    $("#table").append(tr);
 			                }
 			                var sign = false;
-			                var pages = arr.length/10;
+			                var pages = Math.floor(arr.length/10);
 			                var num = arr.length%10;
 			                if(num!=0){
 			                	sign = true;
 			                	pages = pages + 1;
 			                }
+			                alert(pages+" "+num+" "+arr.length+" "+arr.length/10);
 							var options = {
 						            bootstrapMajorVersion:3,
 						            size:"normal",
@@ -71,7 +71,6 @@
 						                        return page;
 						                }
 						            },
-						            useBootstrapTooltip:true,
 						            itemContainerClass: function (type, page, current) {
 						                return (page === current) ? "active" : "pointer-cursor";
 						            },
@@ -85,9 +84,9 @@
 						                var tr = '';
 						                var temp = page*10;
 						                if(sign&&page==pages){
-						                	temp = num;
+						                	temp = temp + num;
 						                }
-						                for(var index=(page-1)*10;index<page*10;index++){
+						                for(var index=(page-1)*10;index<temp;index++){
 						                    tr = "<tr><td height='80px' width='80px'>" + "<a href='Delete_delete?id="+arr[index].customerId+"' onclick='return confirm()'>删除</a>" 
 						                    +" || <a href='javascript:void(0)' onclick='update(this);'>编辑</a>"
 						                    		+ "</td><td>"
