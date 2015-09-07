@@ -49,7 +49,7 @@
 			                	sign = true;
 			                	pages = pages + 1;
 			                }
-			                alert(pages+" "+num+" "+arr.length+" "+arr.length/10);
+			                //alert(pages+" "+num+" "+arr.length+" "+arr.length/10);
 							var options = {
 						            bootstrapMajorVersion:3,
 						            size:"normal",
