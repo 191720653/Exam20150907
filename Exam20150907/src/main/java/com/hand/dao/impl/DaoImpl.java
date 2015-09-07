@@ -216,4 +216,36 @@ public class DaoImpl implements Dao {
 		}
 		return id;
 	}
+	
+	public boolean update(String fname, String lname, String emial, int address, int customerId) {
+		// TODO Auto-generated method stub
+		Connection connection = null;
+		String sql = "update customer set first_name=?,last_name=?,address_id=?,email=? where customer_id=?";
+		PreparedStatement preparedStatement;
+		try {
+			connection = ConnectionFactory.getInstance().makeConnection();
+			preparedStatement = connection.prepareCall(sql);
+			preparedStatement.setString(1, fname);
+			preparedStatement.setString(2, lname);
+			preparedStatement.setInt(3, address);
+			preparedStatement.setString(4, emial);
+			preparedStatement.setInt(5, customerId);
+			preparedStatement.execute();
+			return true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("update出错！");
+			return false;
+		}finally {
+			try {
+				if (connection != null) {
+					connection.close();
+				}
+				System.out.println("update close all");
+			} catch (Exception e2) {
+				// TODO: handle exception
+			}
+		}
+	}
 }

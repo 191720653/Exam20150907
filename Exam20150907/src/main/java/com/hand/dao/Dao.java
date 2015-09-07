@@ -15,5 +15,7 @@ public interface Dao {
 	public boolean save(String fname, String lname, String emial, int address);
 	
 	public boolean delete(int customerId);
+	
+	public boolean update(String fname, String lname, String emial, int address, int customerId);
 
 }

@@ -12,10 +12,12 @@
 <script src="http://cdn.bootcss.com/bootstrap/3.3.1/js/bootstrap.js"></script>
 <script src="bootstrap-paginator.js"></script>
 <title>template</title>
+<!-- data-toggle='modal' data-target='#exampleModal'  -->
 <script>
 	$(document).ready(
 			function() {
 				var arr;
+				
 				function ajaxForData() {
 					$.ajax({
 						method : "Post",
@@ -31,7 +33,7 @@
 			                    tr = "<tr><td height='80px' width='80px'>" + 
 			                    "<a href='Delete_delete?id="+arr[index].customerId
 			                    		+"' onclick='return confirm()'>删除</a>"
-			                    		+" || <a data-toggle='modal' data-target='#exampleModal'>编辑</a>"
+			                    		+" || <a href='javascript:void(0)' onclick='update(this);'>编辑</a>"
 			                    		+ "</td><td>"
 			                            + arr[index].customerId + "</td><td>"
 			                            + arr[index].firstName + "</td><td>"
@@ -87,7 +89,7 @@
 						                }
 						                for(var index=(page-1)*10;index<page*10;index++){
 						                    tr = "<tr><td height='80px' width='80px'>" + "<a href='Delete_delete?id="+arr[index].customerId+"' onclick='return confirm()'>删除</a>" 
-						                    +" || <a data-toggle='modal' data-target='#exampleModal'>编辑</a>"
+						                    +" || <a href='javascript:void(0)' onclick='update(this);'>编辑</a>"
 						                    		+ "</td><td>"
 						                    		+ arr[index].customerId + "</td><td>"
 						                            + arr[index].firstName + "</td><td>"
@@ -117,6 +119,38 @@
 				%>
 				
 			});
+	function ajaxForAddressData() {
+		$.ajax({
+			method : "Post",
+			url : "/Exam20150907/getAddress",
+			async : true,
+			data : "",
+			dataType : 'json',
+			success : function(data) {
+				//alert("Data Getted: " + data);
+				//arr = data;
+				var op = '';
+                for(var index=0;index<data.length;index++){
+                    op = "<option>"+ data[index] + "</option>";
+                    $("#input_fours").append(op);
+                }
+			},
+			timeout : 800,
+			error : function(info, status, error) {
+				alert('Error: ' + info.status + ' - ' + error);
+			}
+		});
+	}
+	
+	function update(obj){
+		ajaxForAddressData();
+		var tds=$(obj).parent().parent().find('td');
+		$('#input_o').val(tds.eq(1).text());
+		$('#input_ones').val(tds.eq(2).text());
+		$('#input_twos').val(tds.eq(3).text());
+		$('#input_threes').val(tds.eq(5).text());
+		$('#exampleModal').modal('show');
+	}
 </script>
 </head>
 <body>
@@ -212,7 +246,15 @@
                     </div>
                     <div class="row">
                         <div class="col-lg-9">
-                            <form class="form-horizontal col-lg-9" name="LoginForm" method="POST" action="Add_add">
+                            <form class="form-horizontal col-lg-9" name="LoginForm" method="POST" action="Edit_edit">
+                                <div class="form-group form-group-md hide">
+                                    <label class="col-md-2 control-label" for="input_o">CustomerId<span
+                                            style="color: red">*</span></label>
+                                    <div class="col-md-8 col-md-offset-2">
+                                        <input class="form-control" type="text" id="input_o" name="customerId"
+                                               placeholder="CustomerId">
+                                    </div>
+                                </div>
                                 <div class="form-group form-group-md">
                                     <label class="col-md-2 control-label" for="input_ones">FirstName<span
                                             style="color: red">*</span></label>
